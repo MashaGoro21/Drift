@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c916cb86811f0904a997d37e95d90ad2, type: 3}
+  m_Name: Retro Cruiser
+  m_EditorClassIdentifier: 
+  carName: Retro Cruiser
+  price: 25000
+  carPrefab: {fileID: 6810362010127827761, guid: 49adedddb8f12cc4f9dfb085d1402b62, type: 3}
+  colors:
+  - {fileID: 2100000, guid: 82be96a19b9bbe341a6e68dc4a28ccb1, type: 2}
+  - {fileID: 2100000, guid: 2b0248632fc3d7b48890d06961da7c54, type: 2}
+  - {fileID: 2100000, guid: ca4201c89af397640b66c63c763af303, type: 2}
+  - {fileID: 2100000, guid: 8abbe35190744484eb5f78f9f2a0f2db, type: 2}
+  - {fileID: 2100000, guid: 395625bc886896f489a91aeae43dea59, type: 2}
+  acceleration: 5
+  handling: 6
+  braking: 4

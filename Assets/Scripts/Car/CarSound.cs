@@ -26,15 +26,16 @@ public class CarSound : MonoBehaviourPun, IPunObservable
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
 
-        audioSource.volume = SaveSystem.GetFloat(PrefsKeys.SFX_VOLUME);
         isMine = photonView.IsMine;
+        
+        float sfxVolume = SaveSystem.GetFloat(PrefsKeys.SFX_VOLUME);
+        audioSource.volume = isMine ? sfxVolume : sfxVolume * 0.35f;
     }
 
     private void Update()
     {
         if(isMine) EngineSound();
-        else
-            audioSource.pitch = Mathf.Lerp(audioSource.pitch, networkPitch, Time.deltaTime * 5f);
+        else audioSource.pitch = Mathf.Lerp(audioSource.pitch, networkPitch, Time.deltaTime * 5f);
     }
 
     private void EngineSound()

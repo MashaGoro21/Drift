@@ -21,11 +21,10 @@ public class Bank : MonoBehaviour
         cash = SaveSystem.GetInt(PrefsKeys.MONEY);
     }
 
-    private void OnDestroy() => SaveSystem.SetInt(PrefsKeys.MONEY, cash);
-
     public void AddCash(int amount)
     {
         cash += amount;
+        SaveSystem.SetInt(PrefsKeys.MONEY, cash);
         OnCashChanged?.Invoke(cash);
     }
 
@@ -34,6 +33,7 @@ public class Bank : MonoBehaviour
         if (cash < amount) return false;
 
         cash -= amount;
+        SaveSystem.SetInt(PrefsKeys.MONEY, cash);
         OnCashChanged?.Invoke(cash);
         return true;
     }

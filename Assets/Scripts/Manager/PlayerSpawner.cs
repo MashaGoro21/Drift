@@ -40,6 +40,10 @@ public class PlayerSpawner : MonoBehaviour
 
         SetupLocalPlayer(carInstance, carData);
 
+        Debug.Log("SPAWNED: " + carInstance.name +
+          " IsMine: " + carInstance.GetComponent<PhotonView>().IsMine +
+          " ViewID: " + carInstance.GetComponent<PhotonView>().ViewID);
+
         return carInstance;
     }
 

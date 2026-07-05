@@ -49,9 +49,12 @@ public class CarController : MonoBehaviourPun, IPunObservable
     private Rigidbody rb;
     private Drift drift;
 
+    private bool isBraking;
     private bool isMine;
-    private float networkSteerInput;
+    private bool wheelEffectActive;
 
+    private Vector3 networkPosition;
+    private Quaternion networkRotation;
 
     private void Awake()
     {
@@ -81,22 +84,26 @@ public class CarController : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            SyncRotationWheels();
+            SyncNetworkMovement();
+            SyncWheelEffects();
         }
     }
 
     private void GetInputs()
     {
         moveInput = Input.GetAxis("Vertical");
-        if (gasPedal.GetIsPressed()) moveInput += gasPedal.GetDampenPress();
+        if (gasPedal != null && gasPedal.GetIsPressed()) moveInput += gasPedal.GetDampenPress();
+        if (brakePedal != null && brakePedal.GetIsPressed()) moveInput -= brakePedal.GetDampenPress();
         
         steerInput = Input.GetAxis("Horizontal");
-        if (rightButton.GetIsPressed()) steerInput += rightButton.GetDampenPress();
-        if (leftButton.GetIsPressed()) steerInput -= leftButton.GetDampenPress();
+        if (rightButton != null && rightButton.GetIsPressed()) steerInput += rightButton.GetDampenPress();
+        if (leftButton != null && leftButton.GetIsPressed()) steerInput -= leftButton.GetDampenPress();
     }
 
     private void Move()
     {
+        if (isBraking) return;
+
         float targetTorque = moveInput * torqueMultiplier * acceleration;
         foreach (var wheel in wheels)
         {
@@ -126,10 +133,12 @@ public class CarController : MonoBehaviourPun, IPunObservable
 
     private void Brake()
     {
-        foreach(var wheel in wheels)
+        float forwardSpeed = Vector3.Dot(rb.velocity, transform.forward);
+        isBraking = brakePedal.GetIsPressed() && forwardSpeed > 0.1f;
+
+        foreach (var wheel in wheels)
         {
-            if(brakePedal.GetIsPressed()) wheel.wheelCollider.brakeTorque = torqueMultiplier * braking;
-            else wheel.wheelCollider.brakeTorque = 0;
+            wheel.wheelCollider.brakeTorque = isBraking ? torqueMultiplier * braking : 0f;
         }
     }
 
@@ -145,41 +154,49 @@ public class CarController : MonoBehaviourPun, IPunObservable
 
     private void WheelEffects()
     {
-        foreach(var wheel in wheels)
-        {
-            if (wheel.axel != Axel.Rear) continue;
-
-            if(brakePedal.GetIsPressed() || drift.GetIsDrifting())
-            {
-                wheel.trailRenderer.emitting = true;
-                wheel.smokeParticle.Emit(1);
-            }
-            else
-            {
-                wheel.trailRenderer.emitting = false;
-            }
-        }
+        wheelEffectActive = isBraking || drift.GetIsDrifting();
+        HandleWheelEffects(wheelEffectActive);
     }
 
-    private void SyncRotationWheels()
+    private void SyncWheelEffects()
+    {
+        HandleWheelEffects(wheelEffectActive);
+    }
+
+    private void HandleWheelEffects(bool effectActive)
     {
         foreach (var wheel in wheels)
         {
-            if (wheel.axel == Axel.Front)
-            {
-                float steerAngle = networkSteerInput * handling * steerMultiplier * maxSteerAngle;
-                wheel.wheelCollider.steerAngle = Mathf.Lerp(wheel.wheelCollider.steerAngle, steerAngle, steerLerp);
-            }
-            wheel.wheelCollider.GetWorldPose(out Vector3 pos, out Quaternion rot);
-            wheel.wheelTransform.position = pos;
-            wheel.wheelTransform.rotation = rot;
+            if (wheel.axel != Axel.Rear) continue;
+
+            if(wheel.trailRenderer != null)
+                wheel.trailRenderer.emitting = effectActive;
+
+            if (effectActive && wheel.smokeParticle != null)
+                wheel.smokeParticle.Emit(1);
         }
+    }
+
+    private void SyncNetworkMovement()
+    {
+        transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * 10f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, networkRotation, Time.deltaTime * 10f);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting) stream.SendNext(steerInput);
-        else networkSteerInput = (float)stream.ReceiveNext();
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+            stream.SendNext(wheelEffectActive);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            wheelEffectActive = (bool)stream.ReceiveNext();
+        }
     }
 
     public void SetAcceleration(float value) => acceleration = value;

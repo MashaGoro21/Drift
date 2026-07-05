@@ -25,7 +25,6 @@ public class CarShopManager : MonoBehaviour
     private int currentCarIndex = 0;
     private GameObject currentCarInstance;
 
-    private void Awake() =>SaveSystem.EnsureCarDefaults(cars);
     private void OnEnable() => ShowCar(currentCarIndex);
 
     private void OnDisable()

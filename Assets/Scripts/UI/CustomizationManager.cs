@@ -42,7 +42,6 @@ public class CustomizationManager : MonoBehaviour
 
     private void Awake()
     {
-        SaveSystem.EnsureCarDefaults(cars);
         parametersPanel.SetActive(false);
         paintText.text = "Painted";
     }

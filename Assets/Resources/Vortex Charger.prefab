@@ -205,7 +205,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -4923,6 +4923,8 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7991752400123999763}
+  - {fileID: 8689231927536858539}
+  - {fileID: 1271804819743975154}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,7 +35,7 @@ public class LevelManager : MonoBehaviourPun
         carInstance = playerSpawner.SpawnCar();
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC(nameof(RPC_SetStartTime), RpcTarget.All, PhotonNetwork.Time + 3.0);
+            photonView.RPC(nameof(RPC_SetStartTime), RpcTarget.AllBuffered, PhotonNetwork.Time + 10.0);
         }
     }
 
@@ -57,11 +58,12 @@ public class LevelManager : MonoBehaviourPun
 
     IEnumerator StartCountdown()
     {
-        int countdown = Mathf.CeilToInt((float)(startTime - PhotonNetwork.Time));
-        while (countdown > 0)
+        while(true)
         {
-            levelUI.ShowCountDownText(countdown.ToString());
-            countdown--;
+            int countdown = Mathf.CeilToInt((float)(startTime - PhotonNetwork.Time));
+            if (countdown > 0) levelUI.ShowCountDownText(countdown.ToString());
+            else break;
+
             yield return new WaitForSeconds(1f);
         }
 

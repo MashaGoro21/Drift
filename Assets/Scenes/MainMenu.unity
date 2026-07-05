@@ -908,6 +908,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9058783532717159950, guid: 3100477d5156d13409782cb543655a22, type: 3}
+      propertyPath: cars.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058783532717159950, guid: 3100477d5156d13409782cb543655a22, type: 3}
+      propertyPath: cars.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9a4f36e0437e2524e835ae8edd7ea953, type: 2}
+    - target: {fileID: 9058783532717159950, guid: 3100477d5156d13409782cb543655a22, type: 3}
+      propertyPath: cars.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0dd1c40661a494445909176637187039, type: 2}
+    - target: {fileID: 9058783532717159950, guid: 3100477d5156d13409782cb543655a22, type: 3}
+      propertyPath: cars.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a20256bbd3bee24f83b0b889427f841, type: 2}
     - target: {fileID: 9074849163673907058, guid: 3100477d5156d13409782cb543655a22, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

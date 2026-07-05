@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,9 +6,11 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Text cashText;
+    [SerializeField] private List<CarData> cars;
 
     private void Start()
     {
+        SaveSystem.EnsureCarDefaults(cars);
         Bank.Instance.OnCashChanged += UpdateCashText;
         UpdateCashText(Bank.Instance.GetCash());
     }

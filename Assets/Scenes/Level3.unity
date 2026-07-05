@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 356decb03293f22498cb5565d128c9da, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 4.5, z: -7.5}
+  m_FollowOffset: {x: 0, y: 3.14, z: -7.8}
   m_XDamping: 1
   m_YDamping: 0
   m_ZDamping: 0
@@ -856,6 +856,34 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1459405035}
+    - target: {fileID: 5495637462965746743, guid: 861b5134e17f03f4fb2eb3cb05ae5b43, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495637462965746743, guid: 861b5134e17f03f4fb2eb3cb05ae5b43, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495637462965746743, guid: 861b5134e17f03f4fb2eb3cb05ae5b43, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495637462965746743, guid: 861b5134e17f03f4fb2eb3cb05ae5b43, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495637462965746743, guid: 861b5134e17f03f4fb2eb3cb05ae5b43, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495637462965746743, guid: 861b5134e17f03f4fb2eb3cb05ae5b43, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495637462965746743, guid: 861b5134e17f03f4fb2eb3cb05ae5b43, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 81
+      objectReference: {fileID: 0}
     - target: {fileID: 7962508556326781348, guid: 861b5134e17f03f4fb2eb3cb05ae5b43, type: 3}
       propertyPath: m_Pivot.x
       value: 0

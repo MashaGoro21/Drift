@@ -823,7 +823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputCreate: {fileID: 554493857}
   inputJoin: {fileID: 354895359}
-  emptyRoomNameMessage: {fileID: 0}
+  messageObject: {fileID: 1304149964}
 --- !u!4 &752703211
 Transform:
   m_ObjectHideFlags: 0
@@ -1797,7 +1797,7 @@ GameObject:
   - component: {fileID: 1304149967}
   - component: {fileID: 1304149966}
   m_Layer: 5
-  m_Name: EmptyRoomNameMessage
+  m_Name: Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1819,8 +1819,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -13.711, y: -147}
-  m_SizeDelta: {x: -27.4222, y: -134.3038}
+  m_AnchoredPosition: {x: 0.000030517578, y: -147}
+  m_SizeDelta: {x: 521.297, y: -134.3038}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1304149966
 MonoBehaviour:

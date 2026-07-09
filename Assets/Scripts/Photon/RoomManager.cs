@@ -12,6 +12,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject messageObject;
 
     private TMP_Text messageText;
+    private Coroutine messageCoroutine;
 
     private void Awake()
     {
@@ -20,8 +21,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        if(!IsRoomNameValid(inputCreate))
+        if (!IsRoomNameValid(inputCreate))
+        {
+            ShowMessage("Room name cannot be empty");
             return;
+        }
 
         int selectedLevel = PlayerPrefs.GetInt("Level");
 
@@ -42,14 +46,21 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if(returnCode == ErrorCode.GameIdAlreadyExists)
         {
-            //
+            ShowMessage("A room with this name already exists");
+        }
+        else
+        {
+            ShowMessage("Could not create the room");
         }
     }
 
     public void JoinRoom()
     {
         if (!IsRoomNameValid(inputJoin))
+        {
+            ShowMessage("Room name cannot be empty");
             return;
+        }
 
         PhotonNetwork.JoinRoom(inputJoin.text);
     }
@@ -79,14 +90,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if(returnCode == ErrorCode.GameDoesNotExist)
         {
-            messageText.text = "Room not found";
-            messageObject.SetActive(true);
-            StartCoroutine(HideMessage());
+            ShowMessage("Room not found");
         }
-
-        if(returnCode == ErrorCode.GameFull)
+        else if (returnCode == ErrorCode.GameFull)
         {
-
+            ShowMessage("Room is full");
+        }
+        else
+        {
+            ShowMessage("Could not join the room");
         }
     }
 
@@ -97,19 +109,20 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private bool IsRoomNameValid(TMP_InputField input)
     {
-        if (string.IsNullOrWhiteSpace(input.text))
-        {
-            messageText.text = "Room name cannot be empty";
-            messageObject.SetActive(true);
-            StartCoroutine(HideMessage());
-            return false;
-        }
-
-        return true;
+        return !string.IsNullOrWhiteSpace(input.text);
     }
 
-    private IEnumerator HideMessage()
+    private void ShowMessage(string textMessage)
     {
+        if (messageCoroutine != null) StopCoroutine(messageCoroutine);
+
+        messageCoroutine = StartCoroutine(ShowTemporaryMessage(textMessage));
+    }
+
+    private IEnumerator ShowTemporaryMessage(string textMessage)
+    {
+        messageText.text = textMessage;
+        messageObject.SetActive(true);
         yield return new WaitForSeconds(2f);
         messageObject.SetActive(false);
     }

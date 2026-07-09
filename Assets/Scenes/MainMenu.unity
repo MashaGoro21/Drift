@@ -888,6 +888,10 @@ PrefabInstance:
       propertyPath: carSpawnPoint
       value: 
       objectReference: {fileID: 889509706}
+    - target: {fileID: 8023390669618335047, guid: 3100477d5156d13409782cb543655a22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8290978114504061844, guid: 3100477d5156d13409782cb543655a22, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

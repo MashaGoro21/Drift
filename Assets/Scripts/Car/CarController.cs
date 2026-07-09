@@ -199,6 +199,19 @@ public class CarController : MonoBehaviourPun, IPunObservable
         }
     }
 
+    public void StopCarInput()
+    {
+        moveInput = 0f;
+        steerInput = 0f;
+        isBraking = false;
+        foreach(var wheel in wheels)
+        {
+            wheel.wheelCollider.motorTorque = 0f;
+            wheel.wheelCollider.brakeTorque = 0f;
+            wheel.wheelCollider.steerAngle = 0f;
+        }
+    }
+
     public void SetAcceleration(float value) => acceleration = value;
     public void SetBraking(float value) => braking = value;
     public void SetHandling(float value) => handling = value;

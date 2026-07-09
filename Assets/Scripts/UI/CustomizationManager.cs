@@ -100,9 +100,9 @@ public class CustomizationManager : MonoBehaviour
     {
         int price = GetParameterPrice(parameter);
         float value = SaveSystem.GetFloat(PrefsKeys.CarParameter(selectedCar.carName, parameter)) + 1;
-
-        if(Bank.Instance.SpendCash(price) && value <= 10)
+        if(Bank.Instance.GetCash() >= price && value <= 10)
         {
+            Bank.Instance.SpendCash(price);
             SaveSystem.SetFloat(PrefsKeys.CarParameter(selectedCar.carName, parameter), value);
             UpdateCarParameters();
         }

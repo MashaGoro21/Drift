@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerSpawner))]
 [RequireComponent(typeof(LevelUI))]
 [RequireComponent(typeof(PhotonView))]
-public class LevelManager : MonoBehaviourPun
+public class LevelManager : MonoBehaviourPunCallbacks
 {
     public static LevelManager Instance { get; private set; }
 
@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviourPun
     private PlayerSpawner playerSpawner;
     private LevelUI levelUI;
     private GameObject carInstance;
+    private CarController carController;
 
     private int earnedCash;
     private bool levelStarted = false;
@@ -33,6 +34,7 @@ public class LevelManager : MonoBehaviourPun
         levelUI = GetComponent<LevelUI>();
 
         carInstance = playerSpawner.SpawnCar();
+        carController = carInstance.GetComponent<CarController>();
         if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC(nameof(RPC_SetStartTime), RpcTarget.AllBuffered, PhotonNetwork.Time + 10.0);
@@ -102,6 +104,16 @@ public class LevelManager : MonoBehaviourPun
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void EnableCarMovement() => carController.enabled = true;
+    public void DisableCarMovement()
+    {
+        carController.enabled = false;
+        carController.StopCarInput();
+    }
+
     public void ReceiveReward() => RequestReward(earnedCash);
     public void ReceiveDoubleReward() => RequestReward(earnedCash*2);
+
+    public void LeaveRoom() => PhotonNetwork.LeaveRoom();
+    public override void OnLeftRoom() => SceneManager.LoadScene("MainMenu");
 }

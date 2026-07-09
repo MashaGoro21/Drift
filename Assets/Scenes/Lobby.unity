@@ -1842,7 +1842,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Room name cannot be empty
+  m_text: a
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 239ce4c3d0311eb4aa634e5d2525784f, type: 2}
   m_sharedMaterial: {fileID: 3536169508695726355, guid: 239ce4c3d0311eb4aa634e5d2525784f, type: 2}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Services.LevelPlay;
+using UnityEditor.PackageManager;
 
 public class AdsManager : MonoBehaviour
 {
@@ -12,13 +13,20 @@ public class AdsManager : MonoBehaviour
         LevelPlay.Init("238808895");
     }
 
-    private void SdkInitializationFailedEvent(LevelPlayInitError error) { }
+    private void SdkInitializationFailedEvent(LevelPlayInitError error) 
+    {
+        Debug.LogError($"LevelPlay initialization failed: {error}");
+    }
 
     private void SdkInitializationCompletedEvent(LevelPlayConfiguration configuration)
     {
+        Debug.Log("LevelPlay initialized successfully");
+
         rewardedAd = new LevelPlayRewardedAd("uhmu414hk852ndkd");
         RegisterRewardedEvents();
         rewardedAd.LoadAd();
+
+        Debug.Log("Rewarded ad loading started");
     }
 
     private void RegisterRewardedEvents()
@@ -31,13 +39,39 @@ public class AdsManager : MonoBehaviour
         rewardedAd.OnAdClosed += OnAdClosed;
     }
 
-    private void OnAdLoaded(LevelPlayAdInfo info) { }
-    private void OnAdLoadFailed(LevelPlayAdError error) { }
-    private void OnAdDisplayed(LevelPlayAdInfo info) { }
-    private void OnAdDisplayFailed(LevelPlayAdDisplayInfoError err) { }
-    private void OnAdRewarded(LevelPlayAdInfo info, LevelPlayReward reward) { LevelManager.Instance.ReceiveDoubleReward(); }
+    private void OnAdLoaded(LevelPlayAdInfo info) 
+    {
+        Debug.Log("Rewarded ad loaded");
+    }
+    private void OnAdLoadFailed(LevelPlayAdError error) 
+    {
+        Debug.LogError($"Rewarded ad load failed: {error}");
+    }
+    private void OnAdDisplayed(LevelPlayAdInfo info) 
+    {
+        Debug.Log("Rewarded ad displayed");
+    }
+
+    private void OnAdDisplayFailed(LevelPlayAdDisplayInfoError error) 
+    {
+        Debug.LogError($"Rewarded ad display failed: {error}");
+
+        rewardedAd.LoadAd();
+
+        if (MusicPlayer.Instance != null)
+            MusicPlayer.Instance.gameObject.SetActive(true);
+    }
+
+    private void OnAdRewarded(LevelPlayAdInfo info, LevelPlayReward reward) 
+    {
+        Debug.Log("Reward received");
+
+        LevelManager.Instance.ReceiveDoubleReward(); 
+    }
     private void OnAdClosed(LevelPlayAdInfo info) 
-    { 
+    {
+        Debug.Log("Rewarded ad closed");
+
         rewardedAd.LoadAd(); 
         MusicPlayer.Instance.gameObject.SetActive(true); 
     }

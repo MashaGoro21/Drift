@@ -5,9 +5,9 @@ using UnityEngine.Purchasing;
 
 public class Purchaser : MonoBehaviour
 {
-    public void OnPurchaseCompleted(Product product)
+    public void OnOrderConfirmed(Order order)
     {
-        switch(product.definition.id)
+        switch(order.Info.PurchasedProductInfo[0].productId)
         {
             case "com.drift.1000":
                 Bank.Instance.AddCash(1000);
@@ -17,4 +17,5 @@ public class Purchaser : MonoBehaviour
                 break;
         }
     }
+
 }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Services.LevelPlay;
-using UnityEditor.PackageManager;
 
 public class AdsManager : MonoBehaviour
 {
